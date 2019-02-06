@@ -13,9 +13,13 @@ namespace BulldozeIt
         private UISprite _happiness;
         private UITextureAtlas _textureAtlas;
         private UICheckBox _abandonedButton;
+        private UILabel _abandonedCounter;
         private UICheckBox _burnedDownButton;
+        private UILabel _burnedDownCounter;
         private UICheckBox _collapsedButton;
+        private UILabel _collapsedCounter;
         private UICheckBox _floodedButton;
+        private UILabel _floodedCounter;
         private UIButton _bulldozingStatistics;
 
         private void Awake()
@@ -89,6 +93,11 @@ namespace BulldozeIt
                     _burnedDownButton.isVisible = true;
                     _collapsedButton.isVisible = true;
                     _floodedButton.isVisible = true;
+
+                    if (ModConfig.Instance.ShowCounters)
+                    {
+                        UpdateCounters();
+                    }
                 }
                 else
                 {
@@ -148,7 +157,8 @@ namespace BulldozeIt
                         "AbandonedFocused",
                         "BurnedDownFocused",
                         "CollapsedFocused",
-                        "FloodedFocused"
+                        "FloodedFocused",
+                        "BulldozerCounter"
                     };
 
                     _textureAtlas = ResourceLoader.CreateTextureAtlas("BulldozeItAtlas", spriteNames, "BulldozeIt.Icons.");
@@ -187,6 +197,9 @@ namespace BulldozeIt
                     ModConfig.Instance.Save();
                 };
 
+                _abandonedCounter = UIUtils.CreateCounterLabel(_abandonedButton, "BulldozeItAbandonedCounter", "0", _textureAtlas, "BulldozerCounter");
+                _abandonedCounter.relativePosition = new Vector3(0f, -12f);
+
                 _burnedDownButton = UIUtils.CreateButtonCheckBox(_tsBar, "BulldozeItBurnedDown", _textureAtlas, "BurnedDown", "Bulldoze Burned Down Buildings", ModConfig.Instance.BurnedDownBuildings);
                 _burnedDownButton.relativePosition = new Vector3(_bulldozerUndergroundToggle.relativePosition.x - 120f, _bulldozerUndergroundToggle.relativePosition.y);
                 _burnedDownButton.eventCheckChanged += (component, value) =>
@@ -194,6 +207,9 @@ namespace BulldozeIt
                     ModConfig.Instance.BurnedDownBuildings = value;
                     ModConfig.Instance.Save();
                 };
+
+                _burnedDownCounter = UIUtils.CreateCounterLabel(_burnedDownButton, "BulldozeItBurnedDownCounter", "0", _textureAtlas, "BulldozerCounter");
+                _burnedDownCounter.relativePosition = new Vector3(0f, -12f);
 
                 _collapsedButton = UIUtils.CreateButtonCheckBox(_tsBar, "BulldozeItCollapsed", _textureAtlas, "Collapsed", "Bulldoze Collapsed Buildings", ModConfig.Instance.CollapsedBuildings);
                 _collapsedButton.relativePosition = new Vector3(_bulldozerUndergroundToggle.relativePosition.x - 80f, _bulldozerUndergroundToggle.relativePosition.y);
@@ -203,6 +219,9 @@ namespace BulldozeIt
                     ModConfig.Instance.Save();
                 };
 
+                _collapsedCounter = UIUtils.CreateCounterLabel(_collapsedButton, "BulldozeItCollapsedCounter", "0", _textureAtlas, "BulldozerCounter");
+                _collapsedCounter.relativePosition = new Vector3(0f, -12f);
+
                 _floodedButton = UIUtils.CreateButtonCheckBox(_tsBar, "BulldozeItFlooded", _textureAtlas, "Flooded", "Bulldoze Flooded Buildings", ModConfig.Instance.FloodedBuildings);
                 _floodedButton.relativePosition = new Vector3(_bulldozerUndergroundToggle.relativePosition.x - 40f, _bulldozerUndergroundToggle.relativePosition.y);
                 _floodedButton.eventCheckChanged += (component, value) =>
@@ -210,6 +229,9 @@ namespace BulldozeIt
                     ModConfig.Instance.FloodedBuildings = value;
                     ModConfig.Instance.Save();
                 };
+
+                _floodedCounter = UIUtils.CreateCounterLabel(_floodedButton, "BulldozeItFloodedCounter", "0", _textureAtlas, "BulldozerCounter");
+                _floodedCounter.relativePosition = new Vector3(0f, -12f);
 
                 _bulldozingStatistics = UIUtils.CreateInfoButton(_happiness, "BulldozeItStatistics", "ToolbarIconBulldozer", "Automatic bulldozed buildings");
                 _bulldozingStatistics.size = new Vector2(100f, 26f);
@@ -229,6 +251,21 @@ namespace BulldozeIt
                 UpdateButtonCheckBox(_burnedDownButton, "BurnedDown", ModConfig.Instance.BurnedDownBuildings);
                 UpdateButtonCheckBox(_collapsedButton, "Collapsed", ModConfig.Instance.CollapsedBuildings);
                 UpdateButtonCheckBox(_floodedButton, "Flooded", ModConfig.Instance.FloodedBuildings);
+
+                if (ModConfig.Instance.ShowCounters)
+                {
+                    _abandonedCounter.isVisible = true;
+                    _burnedDownCounter.isVisible = true;
+                    _collapsedCounter.isVisible = true;
+                    _floodedCounter.isVisible = true;
+                }
+                else
+                {
+                    _abandonedCounter.isVisible = false;
+                    _burnedDownCounter.isVisible = false;
+                    _collapsedCounter.isVisible = false;
+                    _floodedCounter.isVisible = false;
+                }
 
                 _bulldozingStatistics.isVisible = ModConfig.Instance.ShowStatistics ? true : false;
             }
@@ -262,6 +299,21 @@ namespace BulldozeIt
             catch (Exception e)
             {
                 Debug.Log("[Bulldoze It!] Bulldozer:UpdateButtonCheckBox -> Exception: " + e.Message);
+            }
+        }
+
+        private void UpdateCounters()
+        {
+            try
+            {
+                _abandonedCounter.text = Statistics.Instance.AbandonedBuildingsBulldozed.ToString();
+                _burnedDownCounter.text = Statistics.Instance.BurnedDownBuildingsBulldozed.ToString();
+                _collapsedCounter.text = Statistics.Instance.CollapsedBuildingsBulldozed.ToString();
+                _floodedCounter.text = Statistics.Instance.FloodedBuildingsBulldozed.ToString();
+            }
+            catch (Exception e)
+            {
+                Debug.Log("[Bulldoze It!] Bulldozer:UpdateCounters -> Exception: " + e.Message);
             }
         }
 

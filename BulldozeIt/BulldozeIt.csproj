@@ -77,6 +77,9 @@
     <EmbeddedResource Include="Icons\CollapsedFocused.png" />
     <EmbeddedResource Include="Icons\FloodedFocused.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\BulldozerCounter.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)"

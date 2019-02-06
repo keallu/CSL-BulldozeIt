@@ -82,8 +82,15 @@ namespace BulldozeIt
                 ModConfig.Instance.Save();
             });
 
+            selected = ModConfig.Instance.ShowCounters;
+            group.AddCheckbox("Show Counters in Bulldozer Bar", selected, sel =>
+            {
+                ModConfig.Instance.ShowCounters = sel;
+                ModConfig.Instance.Save();
+            });
+
             selected = ModConfig.Instance.ShowStatistics;
-            group.AddCheckbox("Show Statistics", selected, sel =>
+            group.AddCheckbox("Show Statistics in Info Panel", selected, sel =>
             {
                 ModConfig.Instance.ShowStatistics = sel;
                 ModConfig.Instance.Save();

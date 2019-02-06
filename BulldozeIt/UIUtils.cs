@@ -5,6 +5,23 @@ namespace BulldozeIt
 {
     public class UIUtils
     {
+        public static UILabel CreateCounterLabel(UIComponent parent, string name, string text, UITextureAtlas atlas, string spriteName)
+        {
+            UILabel label = parent.AddUIComponent<UILabel>();
+            label.name = name;
+            label.text = text;
+
+            label.isInteractive = false;
+            label.atlas = atlas;
+            label.backgroundSprite = spriteName;
+            label.textScale = 0.75f;
+            label.useOutline = true;
+            label.anchor = UIAnchorStyle.Top | UIAnchorStyle.CenterHorizontal;
+            label.padding = new RectOffset(4, 4, 4, 0);
+
+            return label;
+        }
+
         public static UICheckBox CreateButtonCheckBox(UIComponent parent, string name, UITextureAtlas atlas, string spriteName, string toolTip, bool state)
         {
             UICheckBox checkBox = parent.AddUIComponent<UICheckBox>();
