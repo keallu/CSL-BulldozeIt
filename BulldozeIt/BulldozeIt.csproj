@@ -57,6 +57,7 @@
     <Compile Include="BulldozeUtils.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Loading.cs" />
+    <Compile Include="Managers\BulldozerManager.cs" />
     <Compile Include="ModConfig.cs" />
     <Compile Include="ModInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\BulldozerCounter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Clock.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

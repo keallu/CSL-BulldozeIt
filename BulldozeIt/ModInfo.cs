@@ -32,34 +32,6 @@ namespace BulldozeIt
 
             group = helper.AddGroup(Name);
 
-            selected = ModConfig.Instance.AbandonedBuildings;
-            group.AddCheckbox("Abandoned Buildings", selected, sel =>
-            {
-                ModConfig.Instance.AbandonedBuildings = sel;
-                ModConfig.Instance.Save();
-            });
-
-            selected = ModConfig.Instance.BurnedDownBuildings;
-            group.AddCheckbox("Burned Down Buildings", selected, sel =>
-            {
-                ModConfig.Instance.BurnedDownBuildings = sel;
-                ModConfig.Instance.Save();
-            });
-
-            selected = ModConfig.Instance.CollapsedBuildings;
-            group.AddCheckbox("Collapsed Buildings", selected, sel =>
-            {
-                ModConfig.Instance.CollapsedBuildings = sel;
-                ModConfig.Instance.Save();
-            });
-
-            selected = ModConfig.Instance.FloodedBuildings;
-            group.AddCheckbox("Flooded Buildings", selected, sel =>
-            {
-                ModConfig.Instance.FloodedBuildings = sel;
-                ModConfig.Instance.Save();
-            });
-
             selectedIndex = GetSelectedOptionIndex(IntervalValues, ModConfig.Instance.Interval);
             group.AddDropdown("Interval (in game time)", IntervalLabels, selectedIndex, sel =>
             {

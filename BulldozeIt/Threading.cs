@@ -10,6 +10,7 @@ namespace BulldozeIt
     {
         private ModConfig _modConfig;
         private Statistics _statistics;
+        private BulldozeManager _bulldozeManager;
         private SimulationManager _simulationManager;
         private BuildingManager _buildingManager;
         private Building _building;
@@ -24,6 +25,7 @@ namespace BulldozeIt
             {
                 _modConfig = ModConfig.Instance;
                 _statistics = Statistics.Instance;
+                _bulldozeManager = BulldozeManager.Instance;
                 _buildingManager = Singleton<BuildingManager>.instance;
                 _simulationManager = Singleton<SimulationManager>.instance;
                 _buildingIds = new List<ushort>();
@@ -112,13 +114,15 @@ namespace BulldozeIt
                             }
                         }
 
-                        if (_buildingIds.Count >= _modConfig.MaxBuildingsPerInterval)
+                        if (!_bulldozeManager.IgnoreMaxAtRunOnce && _buildingIds.Count >= _modConfig.MaxBuildingsPerInterval)
                         {
                             break;
                         }
                     }
 
                     BulldozeUtils.DeleteBuildings(_buildingIds);
+
+                    _bulldozeManager.FinishedRunOnce = true;
 
                     _running = false;
                 }
