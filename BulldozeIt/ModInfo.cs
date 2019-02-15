@@ -54,6 +54,13 @@ namespace BulldozeIt
                 ModConfig.Instance.Save();
             });
 
+            selected = ModConfig.Instance.IgnoreSearchingForSurvivors;
+            group.AddCheckbox("Ignore Searching For Survivors", selected, sel =>
+            {
+                ModConfig.Instance.IgnoreSearchingForSurvivors = sel;
+                ModConfig.Instance.Save();
+            });
+
             selected = ModConfig.Instance.ShowCounters;
             group.AddCheckbox("Show Counters in Bulldozer Bar", selected, sel =>
             {

@@ -97,15 +97,23 @@ namespace BulldozeIt
                                 _buildingIds.Add(i);
                                 _statistics.AbandonedBuildingsBulldozed++;
                             }
-                            else if (_modConfig.BurnedDownBuildings && (_building.m_flags & Building.Flags.BurnedDown) != Building.Flags.None)
+                            else if ((_building.m_flags & Building.Flags.BurnedDown) != Building.Flags.None || (_building.m_flags & Building.Flags.Collapsed) != Building.Flags.None)
                             {
-                                _buildingIds.Add(i);
-                                _statistics.BurnedDownBuildingsBulldozed++;
-                            }
-                            else if (_modConfig.CollapsedBuildings && (_building.m_flags & Building.Flags.Collapsed) != Building.Flags.None)
-                            {
-                                _buildingIds.Add(i);
-                                _statistics.CollapsedBuildingsBulldozed++;
+                                if (IsDisasterServiceRequired(_building))
+                                {
+                                    continue;
+                                }
+
+                                if (_modConfig.BurnedDownBuildings && (_building.m_problems & Notification.Problem.Fire) != Notification.Problem.None)
+                                {
+                                    _buildingIds.Add(i);
+                                    _statistics.BurnedDownBuildingsBulldozed++;
+                                }
+                                else if (_modConfig.CollapsedBuildings && ((_building.m_problems & Notification.Problem.StructureDamaged) != Notification.Problem.None || (_building.m_problems & Notification.Problem.StructureVisited) != Notification.Problem.None))
+                                {
+                                    _buildingIds.Add(i);
+                                    _statistics.CollapsedBuildingsBulldozed++;
+                                }
                             }
                             else if (_modConfig.FloodedBuildings && (_building.m_flags & Building.Flags.Flooded) != Building.Flags.None)
                             {
@@ -154,6 +162,22 @@ namespace BulldozeIt
             }
 
             return isRICO;
+        }
+
+        private bool IsDisasterServiceRequired(Building building)
+        {
+            bool isDisasterServiceRequired = false;
+
+            if (!_modConfig.IgnoreSearchingForSurvivors)
+            {
+                isDisasterServiceRequired = building.m_levelUpProgress != 255 ? true : false;
+            }
+            else
+            {
+                isDisasterServiceRequired = false;
+            }
+
+            return isDisasterServiceRequired;
         }
     }
 }

@@ -11,6 +11,7 @@
         public int Interval { get; set; } = 1;
         public int MaxBuildingsPerInterval { get; set; } = 32;
         public bool PreserveHistoricalBuildings { get; set; } = true;
+        public bool IgnoreSearchingForSurvivors { get; set; } = true;
         public bool ShowCounters { get; set; } = true;
         public bool ShowStatistics { get; set; } = true;
 

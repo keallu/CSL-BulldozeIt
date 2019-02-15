@@ -29,14 +29,13 @@ namespace BulldozeIt
         {
             try
             {
-                SimulationManager simulationManager = Singleton<SimulationManager>.instance;
                 BuildingManager buildingManager = Singleton<BuildingManager>.instance;
                 Building building = buildingManager.m_buildings.m_buffer[buildingId];
                 BuildingInfo buildingInfo = building.Info;
 
                 if (building.m_flags != 0)
                 {
-                    if (simulationManager.IsRecentBuildIndex(building.m_buildIndex))
+                    if (Singleton<SimulationManager>.instance.IsRecentBuildIndex(building.m_buildIndex))
                     {
                         int buildingRefundAmount = buildingInfo.m_buildingAI.GetRefundAmount(buildingId, ref building);
                         Singleton<EconomyManager>.instance.AddResource(EconomyManager.Resource.RefundAmount, buildingRefundAmount, buildingInfo.m_class);
