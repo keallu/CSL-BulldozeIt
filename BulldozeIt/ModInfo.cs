@@ -12,14 +12,20 @@ namespace BulldozeIt
         {
             "End of Day",
             "End of Month",
-            "End of Year"
+            "End of Year",
+            "Every 5 seconds",
+            "Every 10 seconds",
+            "Every 30 seconds"
         };
 
         private static readonly int[] IntervalValues =
         {
             1,
             2,
-            3
+            3,
+            4,
+            5,
+            6
         };
 
         public void OnSettingsUI(UIHelperBase helper)
@@ -33,7 +39,7 @@ namespace BulldozeIt
             group = helper.AddGroup(Name);
 
             selectedIndex = GetSelectedOptionIndex(IntervalValues, ModConfig.Instance.Interval);
-            group.AddDropdown("Interval (in game time)", IntervalLabels, selectedIndex, sel =>
+            group.AddDropdown("Interval", IntervalLabels, selectedIndex, sel =>
             {
                 ModConfig.Instance.Interval = IntervalValues[sel];
                 ModConfig.Instance.Save();
