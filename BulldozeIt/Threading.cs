@@ -129,12 +129,12 @@ namespace BulldozeIt
                                     continue;
                                 }
 
-                                if (_modConfig.BurnedDownBuildings && (_building.m_problems & Notification.Problem.Fire) != Notification.Problem.None)
+                                if (_modConfig.BurnedDownBuildings && (_building.m_problems & Notification.Problem1.Fire) != Notification.Problem1.None)
                                 {
                                     _buildingIds.Add(i);
                                     _statistics.BurnedDownBuildingsBulldozed++;
                                 }
-                                else if (_modConfig.CollapsedBuildings && ((_building.m_problems & Notification.Problem.StructureDamaged) != Notification.Problem.None || (_building.m_problems & Notification.Problem.StructureVisited) != Notification.Problem.None))
+                                else if (_modConfig.CollapsedBuildings && ((_building.m_problems & Notification.Problem1.StructureDamaged) != Notification.Problem1.None || (_building.m_problems & Notification.Problem1.StructureVisited) != Notification.Problem1.None))
                                 {
                                     _buildingIds.Add(i);
                                     _statistics.CollapsedBuildingsBulldozed++;
