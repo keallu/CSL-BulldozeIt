@@ -110,6 +110,8 @@ namespace BulldozeIt
                     {
                         _building = _buildingManager.m_buildings.m_buffer[i];
 
+                        if (_building.Info == null) continue;
+
                         if (IsRICOBuilding(_building))
                         {
                             if (_modConfig.PreserveHistoricalBuildings && (_building.m_flags & Building.Flags.Historical) != Building.Flags.None)
