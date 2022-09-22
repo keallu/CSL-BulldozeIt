@@ -1,5 +1,6 @@
 ﻿using ICities;
 using System;
+using System.Reflection;
 
 namespace BulldozeIt
 {
@@ -31,12 +32,15 @@ namespace BulldozeIt
         public void OnSettingsUI(UIHelperBase helper)
         {
             UIHelperBase group;
+
+            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
+
+            group = helper.AddGroup(Name + " - " + assemblyName.Version.Major + "." + assemblyName.Version.Minor);
+
             bool selected;
             int selectedIndex;
             int selectedValue;
             int result;
-
-            group = helper.AddGroup(Name);
 
             selectedIndex = GetSelectedOptionIndex(IntervalValues, ModConfig.Instance.Interval);
             group.AddDropdown("Interval", IntervalLabels, selectedIndex, sel =>
