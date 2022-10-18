@@ -7,7 +7,7 @@ namespace BulldozeIt
     public class ModInfo : IUserMod
     {
         public string Name => "Bulldoze It!";
-        public string Description => "Allows to automate the bulldozing of buildings.";
+        public string Description => "Allows the automatic bulldozing of buildings.";
 
         private static readonly string[] IntervalLabels =
         {
